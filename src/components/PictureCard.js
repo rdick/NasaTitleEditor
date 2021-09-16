@@ -19,7 +19,7 @@ const PictureCard = memo(({ title, explanation, url, date }) => {
 	const marginInline = { marginInline: 5 };
 
 	return (
-		<Card className="card1" style={{ minWidth: '300px', width: '25%', borderRadius: '30px', overflow: 'hidden' }}>
+		<Card className="card1">
 			<CardImg top style={{ objectFit: 'fill', width: '100%', height: '300px' }} src={url.includes('youtube') || url.includes('vimeo') ? '/no_photo_available.png' : url} alt="Card image cap" />
 			<CardBody>
 				<CardTitle tag="h5" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: seeMore ? '' : 'nowrap' }}>
