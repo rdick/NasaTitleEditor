@@ -51,21 +51,24 @@ function App() {
 					<SearchDate text={text} startDate={startDate} endDate={endDate} handleSetText={handleSetText} handleStartDate={handleStartDate} handleEndDate={handleEndDate} />;
 					<div style={{ display: 'flex', justifyContent: 'space-around' }}>
 						<a href="https://ryandick.netlify.app/">
-							<Button color={'danger'} size={'lg'} style={{ marginTop: '1em' }}>
+							<Button color={'danger'} size={'lg'} style={{ marginBottom: '2em', width: 300 }}>
 								Learn More About Ryan?
 							</Button>
 						</a>
 					</div>
-					<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '80vh' }}>
-						<Spinner type="grow" color="primary" style={{ width: '100px', height: '100px' }}>
-							.
-						</Spinner>
+					<div style={{ display: 'flex', justifyContent: 'space-around' }}>
+						<a href="https://github.com/rdick/NasaTitleEditor">
+							<Button color={'danger'} size={'lg'} style={{ marginBottom: '2em', width: 300 }}>
+								Project GitHub Link
+							</Button>
+						</a>
 					</div>
+					<div style={{ height: '70vh' }}>.</div>
 				</Container>
 			</div>
 		);
 	}
-
+	// Photos Loaded => Display Photos
 	return (
 		<div className="App">
 			<Container>
@@ -78,8 +81,15 @@ function App() {
 				<SearchDate text={text} startDate={startDate} endDate={endDate} handleSetText={handleSetText} handleStartDate={handleStartDate} handleEndDate={handleEndDate} />;
 				<div style={{ display: 'flex', justifyContent: 'space-around' }}>
 					<a href="https://ryandick.netlify.app/">
-						<Button color={'danger'} size={'lg'} style={{ marginBottom: '2em' }}>
+						<Button color={'danger'} size={'lg'} style={{ marginBottom: '2em', width: 300 }}>
 							Learn More About Ryan?
+						</Button>
+					</a>
+				</div>
+				<div style={{ display: 'flex', justifyContent: 'space-around' }}>
+					<a href="https://github.com/rdick/NasaTitleEditor">
+						<Button color={'danger'} size={'lg'} style={{ marginBottom: '2em', width: 300 }}>
+							Project GitHub Link
 						</Button>
 					</a>
 				</div>
