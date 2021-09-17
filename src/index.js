@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { ToastProvider } from 'react-toast-notifications';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -18,7 +19,9 @@ const queryClient = new QueryClient({
 ReactDOM.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
-			<App />
+			<ToastProvider autoDismiss autoDismissTimeout={2000} placement="bottom-center">
+				<App />
+			</ToastProvider>
 		</QueryClientProvider>
 	</React.StrictMode>,
 	document.getElementById('root')

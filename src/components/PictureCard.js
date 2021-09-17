@@ -1,11 +1,13 @@
 import { memo, useState } from 'react';
+// Components
+import { useToasts } from 'react-toast-notifications';
+import { CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { motion } from 'framer-motion';
+// Icons
 import { IoHeartSharp, IoHeartOutline } from 'react-icons/io5';
 import { AiFillPushpin, AiOutlinePushpin } from 'react-icons/ai';
 import { HiOutlineShare, HiShare } from 'react-icons/hi';
-import { useToasts } from 'react-toast-notifications';
-
-import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
-import { motion } from 'framer-motion';
+//Hooks
 import useWindowDimensions from '../hooks/windowDimensions';
 
 const PictureCard = memo(({ title, explanation, url, date, setChoosePhoto }) => {
@@ -16,64 +18,73 @@ const PictureCard = memo(({ title, explanation, url, date, setChoosePhoto }) => 
 	const { height, width } = useWindowDimensions();
 	const { addToast } = useToasts();
 
+	// Expand Photo and Read All Text
 	const handleSeeMore = () => {
 		setSeeMore(!seeMore);
-		console.log(seeMore);
 	};
 
+	// Pin Photo - Set Picture as Background of Text and Pop Up
 	const handlePinning = () => {
-		let pinningText, appearance;
+		let pop_up_pinning_text, pop_up_color;
 		if (!pinPhoto) {
 			setChoosePhoto(url);
 			setPinPhoto(true);
-			pinningText = `Pinned Photo - ${title}`;
-			appearance = `success`;
+			pop_up_pinning_text = `Pinned Photo - ${title}`;
+			pop_up_color = `success`;
 		} else {
 			setPinPhoto(false);
-			pinningText = `Unpinned Photo - ${title}`;
-			appearance = `error`;
+			pop_up_pinning_text = `Unpinned Photo - ${title}`;
+			pop_up_color = `error`;
 		}
 
-		addToast(pinningText, {
-			appearance: appearance,
+		addToast(pop_up_pinning_text, {
+			appearance: pop_up_color,
 			autoDismiss: true,
 		});
 	};
 
+	// Liking a Photo - Heart Color Change and Pop Up
 	const handleLiking = () => {
 		setPictureLiked(!pictureLiked);
 
-		const likingText = !pictureLiked ? `Liked - ${title}` : `Unliked - ${title}`;
-		const appearance = !pictureLiked ? `success` : `error`;
+		const pop_up_liked_text = !pictureLiked ? `Liked - ${title}` : `Unliked - ${title}`;
+		const pop_up_color = !pictureLiked ? `success` : `error`;
 
-		addToast(likingText, {
-			appearance: appearance,
+		addToast(pop_up_liked_text, {
+			appearance: pop_up_color,
 			autoDismiss: true,
 		});
 	};
 
+	// Share a Photo - Copy Image Url and Pop Up
 	const handleSharing = () => {
 		setSharedLink(true);
+		// Copy Photo URL
 		navigator.clipboard.writeText(url);
 		addToast(`Copied Link - ${title}`, {
 			appearance: 'info',
 			autoDismiss: true,
 		});
 
+		// Sharing Icon Stays Highlighted for 1 sec after pushing
 		setTimeout(() => {
 			setSharedLink(false);
 		}, 1000);
 	};
 
+	// If Photo URL is a Video Filter It Out
+	const filterToKeepPhotosOnly = (url) => {
+		if (url.includes('youtube') || url.includes('vimeo')) {
+			return '/no_photo_available.png';
+		} else {
+			return url;
+		}
+	};
+
 	return (
-		<motion.div layout data-isOpen={seeMore} className="parent card card1">
+		<motion.div layout data-isOpen={seeMore} className="card card-additions">
 			<div style={width > 700 && seeMore ? { display: 'flex' } : {}}>
-				<CardImg
-					top
-					style={seeMore ? { maxHeight: height - 100 } : { objectFit: 'fill', width: '100%', height: '300px' }}
-					src={url.includes('youtube') || url.includes('vimeo') ? '/no_photo_available.png' : url}
-					alt="Card image cap"
-				/>
+				<CardImg top style={seeMore ? { maxHeight: height - 100 } : { objectFit: 'fill', width: '100%', height: '300px' }} src={filterToKeepPhotosOnly(url)} alt="Image Of Space" />
 				<CardBody>
 					<CardTitle tag="h5" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: seeMore ? '' : 'nowrap' }}>
 						{title}
